@@ -25,34 +25,31 @@ public class Repaso3FW {
 
         File fichero = new File("empleados.txt");
         BufferedReader texto = new BufferedReader(new FileReader(fichero));
-        
 
         Scanner teclado = new Scanner(System.in);
 
         System.out.println("Introduce el nombre, apellido, jefe y departamento");
-        String nombre = teclado.next();
-        String apellido = teclado.next();
-        String jefe = teclado.next();
-        String departamento = teclado.next();
+        String nombre = teclado.nextLine();
+        String apellido = teclado.nextLine();
+        String jefe = teclado.nextLine();
+        String departamento = teclado.nextLine();
 
+        String carta = ""; 
         String parrafo;
-        
         while ((parrafo = texto.readLine()) != null) {
-            if (parrafo.contains("$nombre")) {
-                FileWriter fw = new FileWriter(fichero);
-                fw.write(parrafo.replace("$nombre\n", nombre));
-                fw.close();
-            } /*else if (parrafo.contains("$apellido")) {
-                parrafo.replace("$apellido", apellido);
-            } else if (parrafo.contains("$jefe")) {
-                parrafo.replace("$jefe", jefe);
-            } else if (parrafo.contains("$departamento")) {
-                parrafo.replace("$departamento", departamento);
-            }else{
-                
-            }*/
+            parrafo = parrafo.replace("$nombre", nombre)
+                    .replace("$apellidos", apellido)
+                    .replace("$jefe", jefe)
+                    .replace("$departamento", departamento);
+            
+            carta += parrafo + "\n";
         }
-        
+        texto.close();
+
+        FileWriter fw = new FileWriter(fichero);
+        fw.write(carta);
+        fw.close();
+
     }
 
 }
