@@ -20,8 +20,8 @@ public class Principal {
         DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance(); //clase para crear instancias
         DocumentBuilder builder = factory.newDocumentBuilder(); //parsea documentos xml y crea un objeto qu ealmacena su contenido
 
-        //Document document = builder.parse(new File("C:\\Users\\FP\\Desktop\\AccDatos\\Practica-xml\\productos.xml")); 
-        Document document = builder.parse(new File("C:\\Users\\marke\\Desktop\\AccDatos\\Practica-xml\\productos.xml")); 
+        Document document = builder.parse(new File("C:\\Users\\FP\\Desktop\\AccDatos\\Practica-xml\\productos.xml")); 
+        //Document document = builder.parse(new File("C:\\Users\\marke\\Desktop\\AccDatos\\Practica-xml\\productos.xml")); 
         // devuelve un objeto que representa el xml
         
         document.getDocumentElement().normalize();//elimina vacios y combina nodos
