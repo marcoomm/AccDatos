@@ -1,12 +1,10 @@
 {
-    "curso": "temporada 24/25 ",
+    "nombre": "Copa de Europa 24/25 ",
     "Participantes": [{
-            "horas": 21,
             "nombre": "Jude Bellingham",
-            "nota": 0
+            "edad": 21
         }, {
-            "horas": 25,
             "nombre": "Kylian Mbappé",
-            "nota": 0
+            "edad": 25
         }]
 }

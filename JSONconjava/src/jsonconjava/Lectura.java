@@ -19,7 +19,7 @@ public class Lectura {
             JSONObject jsonLeido = new JSONObject(contenido);
             String nombreProyecto = jsonLeido.getString("nombre");
             
-            JSONArray jsonParticipantesLeidos =jsonLeido.getJSONArray("participantes");
+            JSONArray jsonParticipantesLeidos =jsonLeido.getJSONArray("Participantes");
 
             Proyecto proyectoLeido = new Proyecto(nombreProyecto);
             for(int i=0;i<jsonParticipantesLeidos.length();i++){
