@@ -1,41 +1,25 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
- */
 package modificarEmpleado;
 
-import java.io.FileNotFoundException;
-import java.io.FileOutputStream;
-import java.io.IOException;
-import java.util.ArrayList;
-import javax.xml.parsers.DocumentBuilder;
-import javax.xml.parsers.DocumentBuilderFactory;
-import javax.xml.parsers.ParserConfigurationException;
-import javax.xml.transform.Transformer;
-import javax.xml.transform.TransformerConfigurationException;
-import javax.xml.transform.TransformerException;
-import javax.xml.transform.TransformerFactory;
+import org.w3c.dom.*;
+import javax.xml.parsers.*;
+import javax.xml.transform.*;
 import javax.xml.transform.dom.DOMSource;
 import javax.xml.transform.stream.StreamResult;
-import org.w3c.dom.Document;
-import org.w3c.dom.Element;
-import org.w3c.dom.Node;
-import org.w3c.dom.NodeList;
+import java.io.*;
+import java.util.ArrayList;
+import modificarEmpleado.Empleado;
 import org.xml.sax.SAXException;
 
-/**
- *
- * @author FP
- */
 public class Principal {
 
-    public static void main(String[] args) throws ParserConfigurationException, TransformerConfigurationException, TransformerException, FileNotFoundException, SAXException, IOException {
+    public static void main(String[] args) throws ParserConfigurationException, TransformerException, FileNotFoundException, SAXException, IOException {
 
         ArrayList<Empleado> empleados = new ArrayList<>();
 
+        // Parsear el archivo XML existente
         DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
         DocumentBuilder builder = factory.newDocumentBuilder();
-        Document doc = builder.parse("C:\\Users\\FP\\Desktop\\AccDatos\\modEmpleado\\empleados.xml");
+        Document doc = builder.parse("C:\\Users\\marke\\Desktop\\AccDatos\\modEmpleado\\empleados.xml");
         doc.getDocumentElement().normalize();
 
         NodeList nList = doc.getElementsByTagName("empleado");
@@ -44,7 +28,6 @@ public class Principal {
             Node node = nList.item(i);
 
             if (node.getNodeType() == Node.ELEMENT_NODE) {
-
                 Element eElement = (Element) node;
 
                 String id = eElement.getAttribute("id");
@@ -53,19 +36,23 @@ public class Principal {
                 String ciudad = eElement.getElementsByTagName("ciudad").item(0).getTextContent();
 
                 empleados.add(new Empleado(id, nombre, apellido, ciudad));
-
             }
         }
-        String nombreFichero = "empleados2";
-        DocumentBuilderFactory dFactory = DocumentBuilderFactory.newDefaultInstance();
+
+        // Crear un nuevo documento XML
+        DocumentBuilderFactory dFactory = DocumentBuilderFactory.newInstance();
         DocumentBuilder dBuilder = dFactory.newDocumentBuilder();
         Document document = dBuilder.newDocument();
 
+        // Crear el elemento raíz y agregarlo al nuevo documento
         Element root = document.createElement("empleados");
-        doc.appendChild(root);
-
+        document.appendChild(root);
+        
+        Empleado empleadoNuevo = new Empleado("555", "Marco", "Vjola", "null");
+        empleados.add(empleadoNuevo);
+        
+        // Agregar empleados existentes al nuevo documento
         for (Empleado e : empleados) {
-            
             Element moduloEmpleado = document.createElement("empleado");
             moduloEmpleado.setAttribute("id", e.getId());
             root.appendChild(moduloEmpleado);
@@ -82,17 +69,16 @@ public class Principal {
             moduloCiudad.appendChild(document.createTextNode(e.getCiudad()));
             moduloEmpleado.appendChild(moduloCiudad);
         }
-        /* */
 
-        Empleado empleadoNuevo = new Empleado("555", "Marco", "Vjola", "null");
-        empleados.add(empleadoNuevo);
+        // Agregar un nuevo empleado
 
+
+        // Transformar y escribir el nuevo documento a un archivo XML
         TransformerFactory transformerFactory = TransformerFactory.newInstance();
         Transformer transformer = transformerFactory.newTransformer();
-        DOMSource source = new DOMSource(doc);
-        StreamResult result = new StreamResult(new FileOutputStream("empleados3" + ".xml"));
+        DOMSource source = new DOMSource(document); // Usar el nuevo documento
+        StreamResult result = new StreamResult(new FileOutputStream("empleados3.xml"));
         transformer.transform(source, result);
         System.out.println("Datos actualizados");
     }
-
 }
