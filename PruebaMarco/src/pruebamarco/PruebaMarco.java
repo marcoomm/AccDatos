@@ -20,57 +20,61 @@ public class PruebaMarco {
      */
     public static void main(String[] args) throws ParserConfigurationException, SAXException, IOException {
 
-        DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
-        DocumentBuilder builder = factory.newDocumentBuilder();
+        String xml = "camaras.xml"; // Ruta del archivo XML
+        String txt = "insertat.txt"; // Ruta del archivo de salida TXT
 
-        Document document = builder.parse(new File("C:\\Users\\FP\\Desktop\\AccDatos\\Practica-xml\\productos.xml"));
+        // Cargar el archivo XML
+        File xmlFile = new File(xml);
+        DocumentBuilderFactory dbFactory = DocumentBuilderFactory.newInstance();
+        DocumentBuilder dBuilder = dbFactory.newDocumentBuilder();
+        Document doc = dBuilder.parse(xmlFile);
 
-        document.getDocumentElement().normalize();
-        Element root = document.getDocumentElement();
-        System.out.println(root.getNodeName());
-        NodeList nList = document.getElementsByTagName("camaras_web");
+        // Normalizar el documento
+        doc.getDocumentElement().normalize();
 
-        //System.out.println("Lo ULTIMO de los camaras web");
-        //System.out.println("==============================");
-        
-        File fichero = new File("insertar.txt");
-        for (int temp = 0; temp < nList.getLength(); temp++) {
+        // Obtener la lista de elementos "camara"
+        NodeList camaraList = doc.getElementsByTagName("camara");
 
-            FileWriter escribir = new FileWriter(fichero);
-            Node node = nList.item(temp);
+        // Crear el archivo de salida
+        FileWriter writer = new FileWriter(txt);
 
-            //String frase1 = "Lo ultimo de las cámaras web";
-            //String frase2 = "==============================";
-            //escribir.WRITE(frase1).WRITE(frase2);
-            if (node.getNodeType() == Node.ELEMENT_NODE) {
+        // Recorrer cada elemento "camara"
+        for (int i = 0; i < camaraList.getLength(); i++) {
+            Node camaraNode = camaraList.item(i);
 
-                Element eElement = (Element) node;
-                String id = eElement.getAttribute("id");
+            if (camaraNode.getNodeType() == Node.ELEMENT_NODE) {
+                Element camaraElement = (Element) camaraNode;
 
-                /*String id = eElement.getAttribute("id");
-                String modelo = eElement.getElementsByTagName("modelo").item(0).getTextContent();
-                String marca = eElement.getElementsByTagName("marca").item(0).getTextContent();
-                String altura = eElement.getElementsByTagName("altura").item(0).getTextContent();
-                String anchura = eElement.getElementsByTagName("altura").item(0).getTextContent();
-                String profundidad = eElement.getElementsByTagName("profundidad").item(0).getTextContent();
-                String peso = eElement.getElementsByTagName("peso").item(0).getTextContent();
-                String megapixeles = eElement.getElementsByTagName("megapixeles").item(0).getTextContent();
-                String comentarios = eElement.getElementsByTagName("comentarios").item(0).getTextContent();
-                String señal = "**************************";
-                String texto = "";
-                escribir.write("id: "+id + " ¡¡" + "\n")/*.WRITE("modelo: "+modelo + " ¡¡" + "\n")
-                        .WRITE("marca: "+marca + " ¡¡" + "\n")
-                        .WRITE("altura: "+altura + " #" + "\n").WRITE("anchura: "+anchura + " @" + "\n")
-                        .WRITE("profundidad: "+profundidad+" #"+"\n").WRITE("peso: "+peso+" @"+"\n")
-                        .WRITE("megapixeles: "+megapixeles+" #"+"\n").WRITE("Comentarios :"+comentarios)
-                        .WRITE("******");*/
-                escribir.write("id: " + id + " ¡¡" + "\n");
-                escribir.close();
+                // Obtener los datos de la cámara
+                String id = camaraElement.getAttribute("id");
+                String modelo = camaraElement.getElementsByTagName("modelo").item(0).getTextContent();
+                String marca = camaraElement.getElementsByTagName("marca").item(0).getTextContent();
+                String altura = camaraElement.getElementsByTagName("altura").item(0).getTextContent();
+                String anchura = camaraElement.getElementsByTagName("anchura").item(0).getTextContent();
+                String profundidad = camaraElement.getElementsByTagName("profundidad").item(0).getTextContent();
+                String peso = camaraElement.getElementsByTagName("peso").item(0).getTextContent();
+                String megapixeles = camaraElement.getElementsByTagName("megapixeles").item(0).getTextContent();
+                String comentarios = camaraElement.getElementsByTagName("comentarios").item(0).getTextContent();
+
+                // Usar StringBuilder para construir el contenido
+                StringBuilder camaraInfo = new StringBuilder();
+                camaraInfo.append("Cámara ID: ").append(id).append("\n");
+                camaraInfo.append("Modelo: ").append(modelo).append("\n");
+                camaraInfo.append("Marca: ").append(marca).append("\n");
+                camaraInfo.append("Dimensiones: ").append(altura).append(" x ").append(anchura)
+                          .append(" x ").append(profundidad).append("\n");
+                camaraInfo.append("Peso: ").append(peso).append("\n");
+                camaraInfo.append("Megapíxeles: ").append(megapixeles).append("\n");
+                camaraInfo.append("Comentarios: ").append(comentarios).append("\n\n");
+
+                // Escribir en el archivo de salida
+                writer.write(camaraInfo.toString());
             }
-
-            //escribir.WRITE("FIN DEL DOCUMENTO XML");
         }
 
+        // Cerrar el archivo
+        writer.close();
+        System.out.println("El archivo de texto se ha actualizado correctamente.");
+        
     }
-
 }

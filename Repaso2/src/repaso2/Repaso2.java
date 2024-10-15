@@ -21,46 +21,7 @@ public class Repaso2 {
      * @param args the command line arguments
      */
     public static void main(String[] args) throws FileNotFoundException, IOException {
-        //palabra
-        //caracteres sin espacios
-        //caracteres con espacios
-        //lineas
 
-        /*String linea="";
-       int palabra=0;
-       int lineas=0; 
-       int longitud=0;
-       int espacios=0;
-       int longitudsin=0;*/
- /*longitud=longitud+ parrafo.length();
-        /*
-        for(int i=0;i<=lineas;i++){
-            if(linea==" "){
-                espacios+=1;
-                parrafo+=1;
-               
-            }
-            
-        }
-        parrafo+=1;
-        lineas+=1;
-         *//*
-        int i=0;
-        while((linea=texto.readLine())!=null){
-            
-            if(linea.charAt(parrafo)==" "){
-                
-            }
-        }
-         */
-       //Número de líneas
-        /*System.out.println("Num lineas: "+lineas);  
-    System.out.println("Num de c con espacios: "+longitud);
-    System.out.println("Num de c sin espacios: "+longitudsin);
-         */
-        
-        
-        
         //Fichero de tipo File
         File f = new File("fichero.txt");
         
@@ -80,9 +41,7 @@ public class Repaso2 {
             parrafoSin = parrafo;
             parrafoSin=parrafoSin.replace(" ","");
             caracteresSin+=parrafoSin.length();
-            
-            
-             
+    
         }   
         //contar lineas con redondo hacia arriba
         lineasD=(double)caracteres/95;
