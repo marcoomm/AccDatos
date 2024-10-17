@@ -15,6 +15,7 @@ import org.json.JSONObject;
  */
 public class main {
 
+    
     public static void main(String[] args) throws IOException {
 
         // Crear usuarios
@@ -43,4 +44,8 @@ public class main {
         jsonProyecto.put("Participantes", jsonCursos);
         java.nio.file.Files.write(java.nio.file.Paths.get("proyecto.json"), jsonProyecto.toString().getBytes());
     }
+    
+    
+
+    
 }
