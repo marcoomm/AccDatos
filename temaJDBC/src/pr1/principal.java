@@ -50,6 +50,17 @@ public class principal {
         }
     }
 
+    public static boolean existeAutor(String nombreAutor, Connection con) throws SQLException {
+        String sentenciaAutor = "SELECT * FROM autor";
+        ResultSet sentencia = con.createStatement().executeQuery(sentenciaAutor);
+        if (!sentencia.next()) {
+            return false;
+        } else {
+            sentencia.first();
+        }
+
+    }
+
     public static void main(String[] args) throws SQLException {
 
         String usr = "root";
@@ -76,12 +87,29 @@ public class principal {
                 if (rs.next()) {
                     System.out.println("El libro ya existe");
 
-                    
-                     int id = rs.getInt("idAutor"); String nombre =
+                    /*int id = rs.getInt("idAutor"); 
+                   String nombre =
                      rs.getString("NombreAutor"); System.out.println("Id: " +
-                      id + "\n" + "Nombre: " + nombre);
-
+                      id + "\n" + "Nombre: " + nombre);*/
                 } else {
+
+                    if (!existeAutor(nombreAutor, con)) {
+                        altaAutor(nombreAutor);
+                    }
+                    int idAutor = buscarAutor(nombreAutor);
+
+                    if (!existeTema(nombreTema)) {
+                        altaTema(nombreTema);
+                    }
+                    int idTema = buscarAutor(nombreAutor);
+
+                    if (!existeEditorial(nombreEditorial)) {
+                        altaEditorial(nombreEditorial);
+                    }
+                    int idEditorial = buscarEditorial(nombreEditorial);
+
+                    altaEditorial(nombreEditorial);
+                    altaLibro(isbn, titulo, numeroEjemplares, idAutor, idEditorial, idTema);
 
                 }
 
