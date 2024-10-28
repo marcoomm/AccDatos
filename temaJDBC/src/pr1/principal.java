@@ -42,7 +42,7 @@ public class principal {
             String isbn = "1234567891";
             String titulo = "";
             Integer numeroEjemplares = 0;
-            String nombreAutor = " ";
+            String nombreAutor = "";
             String nombreEditorial = " ";
             String nombreTema = " ";
 
@@ -102,6 +102,7 @@ public class principal {
     private static int buscarAutor(String nombreAutor, Connection con) throws SQLException {
         String sentenciaAutor2 = "Select * from autor where NombreAutor='" + nombreAutor + "'";
         ResultSet sentenciaSelect = con.createStatement().executeQuery(sentenciaAutor2);
+        sentenciaSelect.next();
         return sentenciaSelect.getInt("idAutor");
     }
     private static void altaAutor(String nombreAutor, Connection con) throws SQLException {
@@ -121,6 +122,7 @@ public class principal {
     private static int buscarEditorial(String nombreEditorial, Connection con) throws SQLException {
         String sentenciaEditorial2 = "Select * from editorial where NombreEditorial='" + nombreEditorial + "'";
         ResultSet sentenciaSelect = con.createStatement().executeQuery(sentenciaEditorial2);
+        sentenciaSelect.next();
         return sentenciaSelect.getInt("idEditorial");
     }
 
