@@ -1,6 +1,5 @@
 package pr1;
 
-
 import java.sql.*;
 
 public class principal {
@@ -28,23 +27,24 @@ public class principal {
         } catch (SQLException e) {
             System.out.println("Conexión incorrecta");
             System.out.println(e.getMessage());
+            e.printStackTrace();
         }
 
     }
 
+    
     public static void main(String[] args) {
 
         //INSERCIÓN DE UN REGISTRO: libro
-        try (Connection con = DriverManager.getConnection(CADENA_CONEXION, "root", "fp.2023"); Statement sentencia = con.createStatement();
-                CallableStatement procedimiento = con.prepareCall("CALL altaEditorial(?,?,?)")) {
+        try (Connection con = DriverManager.getConnection(CADENA_CONEXION, "root", "fp.2023"); Statement sentencia = con.createStatement(); CallableStatement procedimiento = con.prepareCall("CALL altaEditorial(?,?,?)")) {
             //System.out.println("Conexión correcta");
             //recogida de datos: LIBRO
-            String isbn = "123";
+            String isbn = "1234567891";
             String titulo = "";
             Integer numeroEjemplares = 0;
-            String nombreAutor = "";
-            String nombreEditorial = "";
-            String nombreTema = "";
+            String nombreAutor = " ";
+            String nombreEditorial = " ";
+            String nombreTema = " ";
 
             //comprobación de datos: LIBRO
             String selectLibro = "SELECT * FROM libro WHERE isbn = '" + isbn + "'; ";
@@ -52,20 +52,20 @@ public class principal {
             if (sentenciaSelect.next()) {
                 System.out.println("El libro ya existe");
                 visualizarLibros();
-                
+
             } else {
                 if (!existeAutor(nombreAutor, con)) {
                     altaAutor(nombreAutor, con);
+                    System.out.println("Autor dado de alta");
                 }
                 int idAutor = buscarAutor(nombreAutor, con);
-                
-                int idTema = buscarTema(nombreTema, con);
-                if (buscarTema(nombreTema,con)==-1) {
-                    altaTema(nombreTema,con);
-                }
-                
 
-                if (!existeEditorial(nombreEditorial)) {
+                int idTema = buscarTema(nombreTema, con);
+                if (buscarTema(nombreTema, con) == -1) {
+                    altaTema(nombreTema, con);
+                }
+
+                if (!existeEditorial(nombreEditorial, con)) {
                     procedimiento.setString(1, nombreEditorial);
                     //pedir datos de la editorial
                     String direccion = "Calle Nueva";
@@ -74,10 +74,10 @@ public class principal {
                     procedimiento.setString(3, telefono);
                     procedimiento.execute();
                 }
-                int idEditorial = buscarEditorial(nombreEditorial);
+                int idEditorial = buscarEditorial(nombreEditorial, con);
 
                 //Hay que dar de alta el libro
-                altaLibro(isbn, titulo, numeroEjemplares, idAutor, idEditorial, idTema);
+                altaLibro(isbn, titulo, numeroEjemplares, idAutor, idEditorial, idTema, con);
                 visualizarLibros();
             }
 
@@ -91,48 +91,66 @@ public class principal {
     }
 
     private static boolean existeAutor(String nombreAutor, Connection con) throws SQLException {
-        String sentenciaAutor = "Select * from autor where nombreAutor='" + nombreAutor + "'";
-        ResultSet sentenciaSelect = con.createStatement().executeQuery(sentenciaAutor);
+        String sentenciaAutor1 = "Select * from autor where NombreAutor='" + nombreAutor + "'";
+        ResultSet sentenciaSelect = con.createStatement().executeQuery(sentenciaAutor1);
         if (!sentenciaSelect.next()) {
             return false;
         } else {
             return true;
         }
     }
-
+    private static int buscarAutor(String nombreAutor, Connection con) throws SQLException {
+        String sentenciaAutor2 = "Select * from autor where NombreAutor='" + nombreAutor + "'";
+        ResultSet sentenciaSelect = con.createStatement().executeQuery(sentenciaAutor2);
+        return sentenciaSelect.getInt("idAutor");
+    }
     private static void altaAutor(String nombreAutor, Connection con) throws SQLException {
-        String sentenciaInsert = "insert into autor(nombreAutor) values ("+nombreAutor+")";
+        String sentenciaInsert = "insert into autor(NombreAutor) values (" + nombreAutor + ")";
         con.createStatement().executeUpdate(sentenciaInsert);
     }
 
-    private static int buscarAutor(String nombreAutor, Connection con) throws SQLException {
-        String sentenciaAutor = "Select * from autor where nombreAutor='" + nombreAutor + "'";
-        ResultSet sentenciaSelect = con.createStatement().executeQuery(sentenciaAutor);
-        return sentenciaSelect.getInt("idAutor");
+    private static boolean existeEditorial(String nombreEditorial, Connection con) throws SQLException {
+        String sentenciaEditorial1 = "Select * from editorial where NombreEditorial='" + nombreEditorial + "'";
+        ResultSet sentenciaSelect = con.createStatement().executeQuery(sentenciaEditorial1);
+        if (!sentenciaSelect.next()) {
+            return false;
+        } else {
+            return true;
+        }
+    }
+    private static int buscarEditorial(String nombreEditorial, Connection con) throws SQLException {
+        String sentenciaEditorial2 = "Select * from editorial where NombreEditorial='" + nombreEditorial + "'";
+        ResultSet sentenciaSelect = con.createStatement().executeQuery(sentenciaEditorial2);
+        return sentenciaSelect.getInt("idEditorial");
     }
 
-    private static int buscarTema(String nombreTema,Connection con) {
+    private static void altaLibro(String isbn, String titulo, Integer numeroEjemplares, int idAutor, int idEditorial, int idTema, Connection con) throws SQLException {
+        String sentenciaInsert = "INSERT INTO libro(isbn, titulo, NumeroEjemplares, idAutor, idEditorial, idTema) VALUES ('" + isbn + "', '" + titulo + "', " + numeroEjemplares + ", " + idAutor + ", " + idEditorial + ", " + idTema + ")";
+        con.createStatement().executeUpdate(sentenciaInsert);
+    }
+
+    private static int buscarTema(String nombreTema, Connection con) throws SQLException{
         int devolver = -1;
-        try(PreparedStatement selectTema = con.prepareStatement("SELECT idTema FROM tema WHERE NombreTema=?")){
-            
+        try (PreparedStatement selectTema = con.prepareStatement("SELECT idTema FROM tema WHERE NombreTema=?")) {
+
             selectTema.setString(1, nombreTema);
             ResultSet salida = selectTema.executeQuery();
-            
-            if(salida.next()){
-                devolver =  salida.getInt("idTema");
+
+            if (salida.next()) {
+                devolver = salida.getInt("idTema");
             }
-            
-        }catch(SQLException e){
+
+        } catch (SQLException e) {
             System.out.println("Error en la sentencia preparada de BUSCAR TEMA");
         }
-        return devolver;      
+        return devolver;
     }
     
-    private static void altaTema( String nombreTema, Connection con){
-        try(PreparedStatement sentenciaInsert = con.prepareStatement("INSERT INTO tema(nombreTema) VALUES (?) ")){
+    private static void altaTema(String nombreTema, Connection con) throws SQLException{
+        try (PreparedStatement sentenciaInsert = con.prepareStatement("INSERT INTO tema(NombreTema) VALUES (?) ")) {
             sentenciaInsert.setString(1, nombreTema);
             sentenciaInsert.execute();
-        }catch(SQLException e){
+        } catch (SQLException e) {
             System.out.println("Error en el alta del TEMA");
         }
     }
