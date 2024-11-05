@@ -39,12 +39,12 @@ public class principal {
         try (Connection con = DriverManager.getConnection(CADENA_CONEXION, "root", "fp.2023"); Statement sentencia = con.createStatement(); CallableStatement procedimiento = con.prepareCall("CALL altaEditorial(?,?,?)")) {
             //System.out.println("Conexión correcta");
             //recogida de datos: LIBRO
-            String isbn = "1234567891";
-            String titulo = "";
-            Integer numeroEjemplares = 0;
-            String nombreAutor = "";
-            String nombreEditorial = " ";
-            String nombreTema = " ";
+            String isbn = "423454343243242342";
+            String titulo = "pepes";
+            Integer numeroEjemplares = 120;
+            String nombreAutor = "Eduardo Cruz Ruiz";
+            String nombreEditorial = "El Mundo";
+            String nombreTema = "AMOR";
 
             //comprobación de datos: LIBRO
             String selectLibro = "SELECT * FROM libro WHERE isbn = '" + isbn + "'; ";
