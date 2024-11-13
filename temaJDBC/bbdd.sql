@@ -158,6 +158,10 @@ UPDATE Libro SET Titulo = "Marketing de Guerra" WHERE IdLibro = 21;
 DELETE FROM Autor WHERE IdAutor = 7;
 DELETE FROM Libro WHERE IdLibro = 22;
 
-SELECT * FROM Biblioteca;
+#CREATE DEFINER=`root`@`localhost` PROCEDURE `altaEditorial`(in nomEd varchar(30), in dir varchar(100), in tel varchar(15))
+#BEGIN
+#	INSERT INTO editorial(nombreEditorial, direccion,telefono)
+#   VALUES (nomEd,dir,tel);
+#END
 
 

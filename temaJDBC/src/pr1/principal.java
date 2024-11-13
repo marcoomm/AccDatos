@@ -36,7 +36,9 @@ public class principal {
     public static void main(String[] args) {
 
         //INSERCIÓN DE UN REGISTRO: libro
-        try (Connection con = DriverManager.getConnection(CADENA_CONEXION, "root", "fp.2023"); Statement sentencia = con.createStatement(); CallableStatement procedimiento = con.prepareCall("CALL altaEditorial(?,?,?)")) {
+        try (Connection con = DriverManager.getConnection(CADENA_CONEXION, "root", "fp.2023");
+                Statement sentencia = con.createStatement();
+                CallableStatement procedimiento = con.prepareCall("CALL altaEditorial(?,?,?)")) {
             //System.out.println("Conexión correcta");
             //recogida de datos: LIBRO
             String isbn = "423454343243242342";
