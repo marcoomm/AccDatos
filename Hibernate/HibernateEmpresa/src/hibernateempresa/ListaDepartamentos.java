@@ -173,6 +173,11 @@ public class ListaDepartamentos {
                 + "from Empleados as e right join e.departamentos as d "
                 + "group by d.deptNo, d.dnombre";
 
+        
+        
+        
+        
+        
         session.close();
 
     }
