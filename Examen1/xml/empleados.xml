@@ -1,8 +1,0 @@
-<?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<empleados>
-    <empleado id="1">
-        <nombre>Mark</nombre>
-        <apellido>Zuckenberg</apellido>
-        <ciudad>Pajaritos</ciudad>
-    </empleado>
-</empleados>
