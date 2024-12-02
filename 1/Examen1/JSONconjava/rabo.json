@@ -1,0 +1,40 @@
+{
+    "films": [
+        {
+            "episode_id": "",
+            "director": "",
+            "title": "",
+            "opening": ""
+        },
+        {
+            "episode_id": "",
+            "director": "",
+            "title": "",
+            "opening": ""
+        }
+    ],
+    "species": [
+        {
+            "average_height": "",
+            "skin_color": "",
+            "name": "",
+            "language": "",
+            "designation": "",
+            "classification": "",
+            "average_lifespan": "",
+            "hair_color": ""
+        },
+        {
+            "average_height": "",
+            "skin_color": "",
+            "name": "",
+            "language": "",
+            "designation": "",
+            "classification": "",
+            "average_lifespan": "",
+            "hair_color": ""
+        }
+    ],
+    "nombre": "Comandane Nail",
+    "height": "enano"
+}

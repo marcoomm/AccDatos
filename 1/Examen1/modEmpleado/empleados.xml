@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<empleados>
+    <empleado id="1">
+        <nombre>Juan</nombre>
+        <apellido>Pérez</apellido>
+        <ciudad>Madrid</ciudad>
+    </empleado>
+    <empleado id="2">
+        <nombre>María</nombre>
+        <apellido>González</apellido>
+        <ciudad>Barcelona</ciudad>
+    </empleado>
+    
+</empleados>
+

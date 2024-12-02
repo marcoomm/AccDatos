@@ -1,0 +1,42 @@
+[
+    {
+        "films": [{
+            "episode_id": "2",
+            "director": "4",
+            "title": "1",
+            "opening": "3"
+        }],
+        "species": [{
+            "average_height": "9",
+            "skin_color": "1",
+            "name": "1",
+            "language": "1",
+            "designation": "7",
+            "classification": "5",
+            "average_lifespan": "1",
+            "hair_color": "1"
+        }],
+        "nombre": "Comandante Nail",
+        "height": "enano"
+    },
+    {
+        "films": [{
+            "episode_id": "2",
+            "director": "4",
+            "title": "1",
+            "opening": "3"
+        }],
+        "species": [{
+            "average_height": "25",
+            "skin_color": "1",
+            "name": "1",
+            "language": "1",
+            "designation": "",
+            "classification": "34",
+            "average_lifespan": "1",
+            "hair_color": "1"
+        }],
+        "nombre": "Soldier of God, Rick",
+        "height": "Gigant"
+    }
+]
